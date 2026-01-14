@@ -1,0 +1,45 @@
+#W2 - Lab
+
+#PROGRAM PROMPT
+#You have been asked to produce a report that lists all the computers in the csv file filehandling.csv.  Your report should look like the following sample output. The last line should print the number of computers in the file.
+
+
+#VARIABLE DICTIONARY
+
+#--IMPORTS-------------------------------------------
+import csv
+#--FUNCTIONS----------------------------------------
+
+#--MAIN EXECUTING CODE------------------------------
+
+#initalize known or needed values (counting vaiables)
+
+total_comp = 0       #total comp in file ->29
+
+print (f"{'Type':20}  {'Brand':5}     {'CPU':5}     {'RAM':5}     {'1st Disk':5}     {'No HDD':5}     {'2nd Disk':5}     {'OS':5}     {'Yr':5}")
+
+#connect to file
+with open ("filehandling.csv") as csvfile:
+    #read text file data into 'file'
+    file = csv.reader(csvfile)
+    #process each ' record' in 'file' (for loop)
+    for record in file:
+        total_comp += 1      #total_comp = total_comp + 1
+
+        #assign each field of data to a variable
+        type = record[0]
+        brand = record[1]     #all file data is read in as a string type
+        cpu = record[2]
+        ram = record[3]
+        f_disk = record[4]
+        no_hdd = record[5]
+        sec_disk = record[6]
+        os = record[7]
+        yr = record[8]
+
+       
+
+#disconnect from file
+
+#display final values: total rooms counted, number of rooms over capacity
+print(f"\n\nTotal Number of Computers: {total_comp}")
