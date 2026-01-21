@@ -14,9 +14,9 @@ import csv
 
 #initalize known or needed values (counting vaiables)
 
-total_comp = 0       #total comp in file ->29
+total_records = 0       #total comp in file ->29
 
-print (f"{'Type':20}  {'Brand':5}     {'CPU':5}     {'RAM':5}     {'1st Disk':5}     {'No HDD':5}     {'2nd Disk':5}     {'OS':5}     {'Yr':5}")
+print (f"{'Type':10}{'Brand':10}{'CPU':4}{'RAM':7}{'1st HD':7}{'2nd HD':7}{'OS':5}{'Yr':5}")
 
 #connect to file
 with open ("filehandling.csv") as csvfile:
@@ -26,20 +26,53 @@ with open ("filehandling.csv") as csvfile:
     for record in file:
         total_comp += 1      #total_comp = total_comp + 1
 
-        #assign each field of data to a variable
-        type = record[0]
-        brand = record[1]     #all file data is read in as a string type
+        #Rec[0] = Machine Type
+        if record[0] == "D":
+            type = "Desktop"
+        elif record[0]:
+            type = "Laptop"
+        else:
+            type = "*ERROR*"
+       
+        #Rec[1] =Brand
+        if record[1] == "DL":
+            brand = "Dell"
+        elif record[1] == "GW":
+            brand = "Gateway"
+        elif record[1] == "HP":
+            brand = "HP"
+        else:
+            brand = "*ERROR*"
+             #all file data is read in as a string type
+       
+        #rec[2]= processor
         cpu = record[2]
+       
+        #rec[3] = ram
         ram = record[3]
-        f_disk = record[4]
-        no_hdd = record[5]
-        sec_disk = record[6]
-        os = record[7]
-        yr = record[8]
+        
+        #rec[4] = 1st hard drive
+        first_hd = record[4]
+        
+        #rec[5] - KEY TO RESET OF THE FIELDS! - num_hd
+        if record[5] == "1":
+            num_hd = record[5]
+            second_hd = "-----" #no second hard drive
+            os = record[6]
+            yr = record[7]
+        else:
+            num_hd = record[5]
+            second_hd = record[6]
+            os = record[7]
+            yr = record[8]
+
+        #display machine data
+        print(f"{type:10}{brand:10}{cpu:4}{ram:7}{first_hd:7}{second_hd:7}{os:5}{yr:5}")
+       
 
        
 
 #disconnect from file
 
 #display final values: total rooms counted, number of rooms over capacity
-print(f"\n\nTotal Number of Computers: {total_comp}")
+print(f"\n\nTotal Number of Computers: {total_records}")
