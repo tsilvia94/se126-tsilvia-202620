@@ -61,8 +61,6 @@ for index in range(0, len(id_number)):
     print(f"{id_number[index]:7}{age[index]:4}{registered[index]:13}{voted[index]:5}")
 print("-" * 50)
 
-old_desktops = 0
-old_laptops = 0
 
 for index in range(0, len(id_number)):
    
