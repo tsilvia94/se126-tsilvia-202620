@@ -9,7 +9,21 @@
 #--IMPORTS-------------------------------------------
 import csv
 #--FUNCTIONS----------------------------------------
-
+def letter(a):
+ 
+    if a >= 90:
+        let = "A"
+    elif a >= 80:
+        let = "B"
+    elif a >= 70:
+        let = "C"
+    elif a >= 60:
+        let = "D"
+    elif a < 60:
+        let ="F"
+    else:
+        let = "ERROR"
+    return let
 #--MAIN EXECUTING CODE------------------------------
 
 #initalize known or needed values (counting vaiables)
@@ -23,12 +37,11 @@ last_name = []
 test1 = []
 test2 = []
 test3 = []
-num_avg =[]
-let_grade =[]
 
 
-print(f"{'FirstName':15}{'LastName':15}{'Test1':7}{'Test2':7}{'Test3':7}{'Average':8}{'Grade':6}")
-print(f"-"*64)
+
+print(f"{'FIRST':10}  {'LAST':10}  {'T1':3}  {'T2':3}  {'T3':3}  {'# AVG':6}  {'L AVG'}")
+print("-----------------------------------------------------------------------------")
 
 #connect to file
 with open ("class_grades-2.csv") as csvfile:
@@ -36,7 +49,6 @@ with open ("class_grades-2.csv") as csvfile:
     file = csv.reader(csvfile)
     #process each ' record' in 'file' (for loop)
     for record in file:
-        total_records += 1      #total_comp = total_comp + 1
 
         #Rec[0] = First Name
         first_name.append(record[0])
@@ -45,44 +57,97 @@ with open ("class_grades-2.csv") as csvfile:
         last_name.append(record[1])
        
         #rec[2]= Test 1
-# convert test scores to integers
-        t1 = int(record[2])
-        t2 = int(record[3])
-        t3 = int(record[4])
+        test1.append(int(record[2]))
 
-        test1.append(t1)
-        test2.append(t2)
-        test3.append(t3)
+        #rec[3] = Test 2
+        test2.append(int(record[3]))
 
-        # calculate average
-        avg = (t1 + t2 + t3) / 3
-        num_avg.append(avg)
-
-        # determine letter grade
-        let_grade.append(record[5])
-        if avg >= 90:
-            let_grade.append("A")
-        elif avg >= 80:
-            let_grade.append("B")
-        elif avg >= 70:
-            let_grade.append("C")
-        elif avg >= 60:
-            let_grade.append("D")
-        else:
-            let_grade.append("F")
-
-
-#display Grdes
-#prin(f"{'FirstName':10}{'LastName':9}{'Test1':6}{'Test2':6}{'Test3':6}{'Average':8}['Grade':6]")
-
-       
-#PROCESS THROUGH THE LIST -- batch processing: do the same thing to each value in said list(s) -- for index in range (0, len(listName))
-#                                                                                                 for index in listName
-#PARALLEL LISTS : data organized in different lists, but connected via index
-for index in range(0, len(first_name)):
-    print(f"{first_name[index]:15}{last_name[index]:15}{test1[index]:5}{test2[index]:7}{test3[index]:7}{num_avg[index]:9.2f}{let_grade[index]:9}")
-
+        #rec[4] = Test 3
+        test3.append(int(record[4]))
 
 #disconnect from file
 
-#display final values: total rooms counted, number of rooms over capacity
+num_avg = []
+let_grade = []
+
+for i in range(0,len(first_name)):
+    a = (test1[i] + test2[i] + test3[i]) / 3
+    num_avg.append(a)
+    let_grade.append(letter(a))
+
+
+
+for i in range(0, len(first_name)):
+    print(f"{first_name[i]:10}  {last_name[i]:10}  {test1[i]:3}  {test2[i]:3}  {test3[i]:3}  {num_avg[i]:6.1f}  {let_grade[i]}")
+print("-----------------------------------------------------------------------------")
+print(f"TOTAL STUDENTS IN FILE: {len(first_name)}")
+
+
+#write student data file
+file = open ("complied_class_info.csv", "w")
+
+for i in range(0, len(first_name)):
+   file.write(f"{first_name[i]},  {last_name[i]},  {test1[i]} , {test2[i]},  {test3[i]}, {num_avg[i]},  {let_grade[i]}")
+file.close()
+
+
+#Repeatable search
+print("\tWelcome to the Student Seach Program!")
+
+answer = input("Would you like to start your search? (y/n): ").lower()
+
+while answer == "y":
+
+    print("\t~Search Menu~")
+    print("1. Search by LAST name")         #one search value found
+    print("2. Search by LETTER grade")      #multiple search values found
+    print("3. EXIT")
+    #gain search type 
+    search_type = input("Enter your search type [1-3]: ")
+
+    #filter search options based on type
+    if search_type == "1": #LAST NAME    
+        print("\tLAST NAME SEARCH~")    
+        found = -1 
+        search_last = input("Enter the last name you wish to find: ") 
+        for i in range(0, len(last_name)):
+            if search_last.lower() == last_name[i].lower():
+                found = i 
+
+        if found != -1:
+            print(f"Your search for {search_last} was FOUND! Here is their data: ")
+            print(f"{first_name[found]:10}  {last_name[found]:10}  {test1[found]:3}  {test2[found]:3}  {test3[found]:3}  {num_avg[found]:6.1f}  {let_grade[found]}")
+        else: 
+            print(f"Your search for {search_last} was NOT FOUND!")
+            print("Check your cAsInG and sPeLlInG and try again!")
+    
+    elif search_type == "2": #LETTER GRADE
+        print("\tLETTER GRADE SEARCH")
+
+        found = [] 
+        search_let= input("Enter the LETTER GRADE you wish to find: ") 
+        for i in range(0, len(let_grade)):
+            if search_let.upper() == let_grade[i]: 
+
+                found.append(i)
+                
+
+        if not found: 
+            print(f"Your search for {search_let} was NOT FOUND!")
+            print("Check your cAsInG and sPeLlInG and try again!")
+        else: 
+            print(f"Your search for {search_let} was FOUND! Here is their data: ")
+
+            for i in range(0, len(found)):
+                print(f"{found[i]}:  {first_name[found[i]]:10}  {last_name[found[i]]:10}  {test1[found[i]]:3}  {test2[found[i]]:3}  {test3[found[i]]:3}  {num_avg[found[i]]:6.1f}  {let_grade[found[i]]}")
+    elif search_type == "3":
+        print("\t~EXIT~")
+        answer = "x"
+    else:
+        print("\t!INVALID ENTRY!")
+    
+    if search_type == "1" or search_type == "2":
+        answer = input("Would you like to search again? [y/n]: ").lower()
+
+
+print("\nThanks for using the search program. Goodbye!\n")
