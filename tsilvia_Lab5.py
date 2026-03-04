@@ -1,4 +1,4 @@
-#Tyler Silvia
+y#Tyler Silvia
 #Lab 5
 #2/14/2026
 
@@ -158,24 +158,6 @@ while answer == "y":
             print(f"{library_number[i]:<10}{title[i]:<40}{author[i]:<20}{genre[i]:<20}{page_count[i]:<10}{status[i]:<10}")
         else:
             print(f"Your search for {search_genre} was NOT FOUND!")
-
-    
-    elif search_type == "2": #LETTER GRADE
-        print("\tLETTER GRADE SEARCH")
-
-        found = [] 
-        search_let= input("Enter the LETTER GRADE you wish to find: ") 
-        for i in range(0, len(let_grade)):
-            if search_let.upper() == let_grade[i]: 
-
-                found.append(i)
-                
-
-        if not found: 
-            print(f"Your search for {search_let} was NOT FOUND!")
-            print("Check your cAsInG and sPeLlInG and try again!")
-        else: 
-            print(f"Your search for {search_let} was FOUND! Here is their data: ")
 
             for i in range(0, len(found)):
                 print(f"{found[i]}:  {first_name[found[i]]:10}  {last_name[found[i]]:10}  {test1[found[i]]:3}  {test2[found[i]]:3}  {test3[found[i]]:3}  {num_avg[found[i]]:6.1f}  {let_grade[found[i]]}")
